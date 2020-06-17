@@ -19,7 +19,7 @@ func main() {
 	defer img.Close()
 
 	filename := path.Base(os.Args[1])
-	filename = strings.Trim(filename, path.Ext(filename))
+	filename = strings.TrimSuffix(filename, path.Ext(filename))
 
 	imgType := path.Ext(os.Args[1])
 	method := os.Args[2]
