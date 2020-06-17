@@ -23,6 +23,9 @@ func main() {
 
 	imgType := path.Ext(os.Args[1])
 	method := os.Args[2]
+	if !(method == "coeff" || method == "avg") {
+		panic("go-grayscale: method must be of type coeff or avg")
+	}
 
 	var loadedImg image.Image
 	if imgType == ".jpeg" || imgType == ".jpg" {
@@ -70,7 +73,6 @@ func grayscale(img image.Image, method string) image.Image {
 
 			} else {
 				yComp = uint8((0.299*float64(r) + 0.5870*float64(g) + 0.1140*float64(b)) / 256)
-
 			}
 
 			pixel := color.Gray{
