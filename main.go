@@ -22,6 +22,7 @@ func main() {
 	filename = strings.Trim(filename, path.Ext(filename))
 
 	imgType := path.Ext(os.Args[1])
+	method := os.Args[2]
 
 	var loadedImg image.Image
 	if imgType == ".jpeg" || imgType == ".jpg" {
@@ -35,8 +36,8 @@ func main() {
 		panic(err)
 	}
 
-	grayscaledImg := grayscaleSum(loadedImg)
-	grayscaledImgFile, err := os.Create(fmt.Sprintf("%s-grayscaled%s", filename, imgType))
+	grayscaledImg := grayscale(loadedImg, method)
+	grayscaledImgFile, err := os.Create(fmt.Sprintf("%s-grayscaled-%s%s", filename, method, imgType))
 	if err != nil {
 		panic(err)
 	}
@@ -50,7 +51,7 @@ func main() {
 
 }
 
-func grayscaleSum(img image.Image) image.Image {
+func grayscale(img image.Image, method string) image.Image {
 	imgBounds := img.Bounds()
 
 	grayscaledImg := image.NewRGBA(image.Rect(0, 0, imgBounds.Max.X, imgBounds.Max.Y))
@@ -63,7 +64,15 @@ func grayscaleSum(img image.Image) image.Image {
 		for y := grayscaledImgBounds.Min.Y; y < height; y++ {
 			r, g, b, _ := img.At(x, y).RGBA()
 
-			yComp := uint8((0.299*float64(r) + 0.5870*float64(g) + 0.1140*float64(b)) / 256)
+			var yComp uint8
+			if method == "avg" {
+				yComp = uint8((r + g + b) / 256 / 3)
+
+			} else {
+				yComp = uint8((0.299*float64(r) + 0.5870*float64(g) + 0.1140*float64(b)) / 256)
+
+			}
+
 			pixel := color.Gray{
 				yComp,
 			}
