@@ -1,33 +1,39 @@
-# go-grayscale
+# go-filters 🖼️
 
-This is a simple go program to convert images to a grayscale format.
+This is a simple go project that applies different filters like grayscale black&white to an image.
 
 ## Usage
 
-With the weighted sum method
+There are several filters you can apply to an image. Here is a start.
+
+The grayscale filter using the weighted coefficients
 
 ```console
-$ go run main.go ./examples/winxp.png coeff
+$ go run main.go ./examples/winxp.png grayscale-coeff
 ```
 
-With the averaging method
+The grayscale filter using the average value of the three channels ((R)ed, (G)reen and (B)lue)
 
 ```console
-$ go run main.go ./examples/winxp.png avg
+$ go run main.go ./examples/winxp.png grayscale-avg
 ```
 
+The black&white filter
 
-## Methods
+```console
+$ go run main.go ./examples/winxp.png bw
+```
 
- - averaging the RGB components
- - weighted sum of the RGB components `Y = 0.299 * R + 0.587 * G + 0.114 * B`
+## Filters
+
+- averaging the RGB components
+- weighted sum of the RGB components `Y = 0.299 * R + 0.587 * G + 0.114 * B`
 
 ## Examples
 
 Original image
 
 ![](./examples/winxp.png)
-
 
 Grayscale using the weighted sum method
 
@@ -41,4 +47,3 @@ Grayscale using the averaging method
 
 - https://en.wikipedia.org/wiki/Grayscale
 - https://stackoverflow.com/questions/42516203/converting-rgba-image-to-grayscale-golang
-
