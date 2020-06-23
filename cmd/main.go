@@ -8,7 +8,8 @@ import (
 	"os"
 	"path"
 	"strings"
-	"github.com/impzero/go-grayscale/filters"
+
+	"github.com/impzero/go-filters/filters"
 )
 
 func main() {
@@ -22,9 +23,10 @@ func main() {
 	filename = strings.TrimSuffix(filename, path.Ext(filename))
 
 	imgType := path.Ext(os.Args[1])
-	method := os.Args[2]
-	if !(method == "coeff" || method == "avg") {
-		panic("go-grayscale: method must be of type coeff or avg")
+	filter := os.Args[2]
+
+	if !(filter == "grayscale-coeff" || filter == "grayscale-avg" || filter == "bw") {
+		panic("go-filters: filter must be of type grayscale-coeff, grayscale-avg or bw")
 	}
 
 	var loadedImg image.Image
@@ -39,14 +41,20 @@ func main() {
 		panic(err)
 	}
 
-	grayscaledImg := filters.Grayscale(loadedImg, method)
-	grayscaledImgFile, err := os.Create(fmt.Sprintf("%s-grayscaled-%s%s", filename, method, imgType))
+	var filImg image.Image
+	if strings.HasPrefix(filter, "grayscale") {
+		filImg = filters.Grayscale(loadedImg, filter)
+	} else if filter == "bw" {
+		filImg = filters.BlackWhite(loadedImg)
+	}
+
+	filImgFile, err := os.Create(fmt.Sprintf("%s-%s%s", filename, filter, imgType))
 	if err != nil {
 		panic(err)
 	}
-	defer grayscaledImgFile.Close()
+	defer filImgFile.Close()
 
-	err = jpeg.Encode(grayscaledImgFile, grayscaledImg, nil)
+	err = jpeg.Encode(filImgFile, filImg, nil)
 
 	if err != nil {
 		panic(err)

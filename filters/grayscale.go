@@ -5,6 +5,7 @@ import (
 	"image/color"
 )
 
+// Grayscale is a function that takes an image and a method and returns a grayscaled version of it
 func Grayscale(img image.Image, method string) image.Image {
 	imgBounds := img.Bounds()
 
@@ -19,7 +20,7 @@ func Grayscale(img image.Image, method string) image.Image {
 			r, g, b, _ := img.At(x, y).RGBA()
 
 			var yComp uint8
-			if method == "avg" {
+			if method == "grayscale-avg" {
 				yComp = uint8((r + g + b) / 256 / 3)
 
 			} else {
