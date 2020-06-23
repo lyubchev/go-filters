@@ -1,4 +1,4 @@
-module github.com/impzero/go-grayscale
+module github.com/impzero/go-filters
 
 go 1.14
 
