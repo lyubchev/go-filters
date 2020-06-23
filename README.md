@@ -26,8 +26,12 @@ $ go run main.go ./examples/winxp.png bw
 
 ## Filters
 
-- averaging the RGB components
-- weighted sum of the RGB components `Y = 0.299 * R + 0.587 * G + 0.114 * B`
+- Grayscales
+
+  - averaging the RGB components
+  - weighted sum of the RGB components `Y = 0.299 * R + 0.587 * G + 0.114 * B`
+
+- Black & White
 
 ## Examples
 
@@ -42,6 +46,10 @@ Grayscale using the weighted sum method
 Grayscale using the averaging method
 
 ![](./examples/winxp-grayscaled-avg.png)
+
+Black & White filter
+
+![](./examples/winxp-bw.png)
 
 ## Resources
 
