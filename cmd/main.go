@@ -13,6 +13,14 @@ import (
 )
 
 func main() {
+	// filtersMap is a map used to for filter input validation
+	filtersMap := map[string]byte{
+		"grayscale-coeff": 1,
+		"grayscale-avg":   1,
+		"bw":              1,
+		"negative":        1,
+	}
+
 	img, err := os.Open(os.Args[1])
 	if err != nil {
 		panic(err)
@@ -25,7 +33,7 @@ func main() {
 	imgType := path.Ext(os.Args[1])
 	filter := os.Args[2]
 
-	if !(filter == "grayscale-coeff" || filter == "grayscale-avg" || filter == "bw") {
+	if _, ok := filtersMap[filter]; !ok {
 		panic("go-filters: filter must be of type grayscale-coeff, grayscale-avg or bw")
 	}
 
@@ -46,6 +54,8 @@ func main() {
 		filImg = filters.Grayscale(loadedImg, filter)
 	} else if filter == "bw" {
 		filImg = filters.BlackWhite(loadedImg)
+	} else if filter == "negative" {
+		filImg = filters.Negative(loadedImg)
 	}
 
 	filImgFile, err := os.Create(fmt.Sprintf("%s-%s%s", filename, filter, imgType))
