@@ -5,7 +5,7 @@ import (
 	"image/color"
 )
 
-// BlackWhite is a function that takes an image and a method and returns a black&whhite version of it
+// BlackWhite is a function that takes an image - returns a black & white version of it
 func BlackWhite(img image.Image) image.Image {
 	imgBounds := img.Bounds()
 
