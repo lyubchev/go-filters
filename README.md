@@ -1,6 +1,6 @@
 # go-filters 🖼️
 
-This is a simple go project that applies different filters like grayscale black&white to an image.
+This is a simple go project that applies different filters like grayscale or B&W to an image.
 
 ## Usage
 
